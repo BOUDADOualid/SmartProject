@@ -68,6 +68,12 @@ public class GenericDaoImpl<E> implements IGenericDao<E> {
 
 	@Override
 	public E findOne(String[] paramNames, Object[] paramValues) {
+
+		if (paramNames.length != paramValues.length) {
+
+			return null;
+		}
+
 		String queryString = "select e from " + type.getName() + "e where";
 		int len = paramNames.length;
 		for (int i = 0; i < len; i++) {
@@ -87,8 +93,10 @@ public class GenericDaoImpl<E> implements IGenericDao<E> {
 
 	@Override
 	public int findCountBy(String paramName, String paramValue) {
-		
-		return 0;
+         
+		Query query=em.createQuery("select t from"+type.getSimpleName()+"t where "+paramName+" = :x");
+		query.setParameter(paramName,paramValue);
+		return query.getResultList().size() > 0 ?((Long) query.getSingleResult()).intValue():0;
 	}
 
 }

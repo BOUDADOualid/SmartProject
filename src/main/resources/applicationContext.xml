@@ -36,6 +36,10 @@
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory"></property>
 	</bean>
+	
+	<!-- declrations des beans -->
+	<import resource="classpath:config/beans-config.xml"/>
+	
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<context:annotation-config></context:annotation-config>
 </beans>
